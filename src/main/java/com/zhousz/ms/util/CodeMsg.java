@@ -1,4 +1,4 @@
-package com.zhousz.ms.result;
+package com.zhousz.ms.util;
 
 public class CodeMsg {
 
@@ -11,7 +11,7 @@ public class CodeMsg {
     /**
      *  100x 为数据库操作结果
      */
-    public static CodeMsg LIST_EMPTY = new CodeMsg(1001, "查询结果为空!");
+    public static CodeMsg COLL_EMPTY = new CodeMsg(1001, "查询结果为空!");
 
     public static CodeMsg  SERVER_ERROR = new CodeMsg(500, "服务器异常!");
 

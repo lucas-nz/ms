@@ -1,16 +1,15 @@
 package com.zhousz.ms.controller;
 
 import com.zhousz.ms.domain.SysUser;
-import com.zhousz.ms.result.CodeMsg;
-import com.zhousz.ms.result.Result;
+import com.zhousz.ms.util.CodeMsg;
+import com.zhousz.ms.util.ResultUtil;
 import com.zhousz.ms.service.SysUserService;
+import com.zhousz.ms.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import sun.security.validator.Validator;
 
 import java.util.List;
 
@@ -28,8 +27,8 @@ public class IndexController {
 
     @ResponseBody
     @RequestMapping("/result")
-    public Result<String> getResult() {
-        return Result.success("hello, result");
+    public ResultUtil<String> getResult() {
+        return ResultUtil.success("hello, util");
     }
 
     @RequestMapping(value = "/index")
@@ -40,11 +39,11 @@ public class IndexController {
 
     @ResponseBody
     @RequestMapping(value = "/user")
-    public Result<List<SysUser>> getUser() {
+    public ResultUtil<List<SysUser>> getUser() {
         List<SysUser> list = sysUserService.getSysUserList();
-        if (list.isEmpty()){
-            return Result.error(CodeMsg.LIST_EMPTY);
+        if (ValidateUtil.isEmpty(list)){
+            return ResultUtil.error(CodeMsg.COLL_EMPTY);
         }
-        return Result.success(list);
+        return ResultUtil.success(list);
     }
 }

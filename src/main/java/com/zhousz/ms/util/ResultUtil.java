@@ -1,6 +1,6 @@
-package com.zhousz.ms.result;
+package com.zhousz.ms.util;
 
-public class Result<T> {
+public class ResultUtil<T> {
 
     private int code;
 
@@ -8,13 +8,13 @@ public class Result<T> {
 
     private T data;
 
-    private Result(T data) {
+    private ResultUtil(T data) {
         this.code = 0;
         this.msg = "success";
         this.data = data;
     }
 
-    private Result(CodeMsg codeMsg) {
+    private ResultUtil(CodeMsg codeMsg) {
         if (null == codeMsg) {
             return;
         }
@@ -28,8 +28,8 @@ public class Result<T> {
      * @param <T>
      * @return
      */
-    public static <T> Result<T> success(T data) {
-        return new Result<T>(data);
+    public static <T> ResultUtil<T> success(T data) {
+        return new ResultUtil<T>(data);
     }
 
     /**
@@ -38,8 +38,8 @@ public class Result<T> {
      * @param <T>
      * @return
      */
-    public static <T> Result<T> error(CodeMsg codeMsg) {
-        return  new Result<T>(codeMsg);
+    public static <T> ResultUtil<T> error(CodeMsg codeMsg) {
+        return  new ResultUtil<T>(codeMsg);
     }
 
 
