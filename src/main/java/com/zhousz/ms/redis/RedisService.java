@@ -1,6 +1,7 @@
 package com.zhousz.ms.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonEncoding;
 import com.zhousz.ms.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,22 @@ public class RedisService {
             returnToPool(jedis);
         }
     }
+
+    public Object get(KeyPrefix prefix, String key) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            String realKey = prefix.getPrefix() + key;
+            String str = jedis.get(realKey);
+            Object ret = JSON.parse(str);
+            return ret;
+        }finally {
+            returnToPool(jedis);
+        }
+    }
+
+
+
 
 
     /**
@@ -70,7 +87,9 @@ public class RedisService {
         }else if(clazz == long.class || clazz == Long.class) {
             return ""+value;
         }else {
-            return JSON.toJSONString(value);
+            String s = JSON.toJSONString(value);
+
+            return s;
         }
     }
 

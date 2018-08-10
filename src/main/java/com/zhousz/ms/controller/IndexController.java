@@ -70,5 +70,12 @@ public class IndexController {
     }
 
 
+    @ResponseBody
+    @RequestMapping("/redis/get")
+    public Result<Object> redisGet() {
+        Object listString = redisService.get(SysUserKey.getListPrefix, "");
+        return Result.success(listString);
+    }
+
 
 }
