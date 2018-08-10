@@ -1,6 +1,6 @@
 package com.zhousz.ms.domain;
 
-public class SysUser {
+public class SysUser implements ISysUser{
 
     private String operId;
 

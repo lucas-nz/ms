@@ -1,8 +1,10 @@
 package com.zhousz.ms.controller;
 
 import com.zhousz.ms.domain.SysUser;
+import com.zhousz.ms.redis.RedisService;
+import com.zhousz.ms.redis.SysUserKey;
 import com.zhousz.ms.util.CodeMsg;
-import com.zhousz.ms.util.ResultUtil;
+import com.zhousz.ms.util.Result;
 import com.zhousz.ms.service.SysUserService;
 import com.zhousz.ms.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class IndexController {
     @Autowired
     private SysUserService sysUserService;
 
+    @Autowired
+    private RedisService redisService;
+
     @ResponseBody
     @RequestMapping("/hello")
     public String hello(){
@@ -27,8 +32,8 @@ public class IndexController {
 
     @ResponseBody
     @RequestMapping("/result")
-    public ResultUtil<String> getResult() {
-        return ResultUtil.success("hello, util");
+    public Result<String> getResult() {
+        return Result.success("hello, util");
     }
 
     @RequestMapping(value = "/index")
@@ -39,11 +44,31 @@ public class IndexController {
 
     @ResponseBody
     @RequestMapping(value = "/user")
-    public ResultUtil<List<SysUser>> getUser() {
+    public Result<List<SysUser>> getUser() {
         List<SysUser> list = sysUserService.getSysUserList();
         if (ValidateUtil.isEmpty(list)){
-            return ResultUtil.error(CodeMsg.COLL_EMPTY);
+            return Result.error(CodeMsg.COLL_EMPTY);
         }
-        return ResultUtil.success(list);
+        return Result.success(list);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/redis/set")
+    public  Result<Object> redisSet(){
+        List<SysUser> sysUserList = sysUserService.getSysUserList();
+        Result<Object> result = new Result<Object>();
+        try{
+            if (ValidateUtil.isNotEmpty(sysUserList)) {
+                redisService.set(SysUserKey.getListPrefix, "", sysUserList);
+            }
+            result = Result.success(true);
+        }catch (Exception e){
+            e.printStackTrace();
+            result = Result.error(CodeMsg.SERVER_ERROR);
+        }
+        return result;
+    }
+
+
+
 }
