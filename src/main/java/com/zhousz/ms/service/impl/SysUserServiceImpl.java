@@ -15,6 +15,7 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserDao sysUserDao;
 
     public List<SysUser> getSysUserList() {
-        return sysUserDao.getSysUserList();
+        List<SysUser> sysUserList = sysUserDao.getSysUserList();
+        return sysUserList;
     }
 }

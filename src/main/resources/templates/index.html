@@ -5,6 +5,8 @@
     <title>index</title>
 </head>
 <body>
-    <p th:text="'hello' + ${name}"></p>
+    <th:block th:each="user: ${sysUserList}">
+        <div th:text="${user.empName}"></div>
+    </th:block>
 </body>
 </html>

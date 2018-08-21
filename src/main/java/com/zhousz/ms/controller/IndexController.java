@@ -1,11 +1,14 @@
 package com.zhousz.ms.controller;
 
+import com.zhousz.ms.domain.CaPerson;
 import com.zhousz.ms.domain.SysUser;
+import com.zhousz.ms.redis.CaPersonKey;
 import com.zhousz.ms.redis.RedisService;
 import com.zhousz.ms.redis.SysUserKey;
+import com.zhousz.ms.service.CaPersonService;
+import com.zhousz.ms.service.SysUserService;
 import com.zhousz.ms.util.CodeMsg;
 import com.zhousz.ms.util.Result;
-import com.zhousz.ms.service.SysUserService;
 import com.zhousz.ms.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,9 @@ public class IndexController {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private CaPersonService caPersonService;
+
     @ResponseBody
     @RequestMapping("/hello")
     public String hello(){
@@ -38,28 +44,28 @@ public class IndexController {
 
     @RequestMapping(value = "/index")
     public String index(Model model) {
-        model.addAttribute("name", "zhousz");
+        List<SysUser> sysUserList = sysUserService.getSysUserList();
+        model.addAttribute("sysUserList", sysUserList);
         return "index";
     }
 
+
+
+
     @ResponseBody
     @RequestMapping(value = "/user")
-    public Result<List<SysUser>> getUser() {
-        List<SysUser> list = sysUserService.getSysUserList();
-        if (ValidateUtil.isEmpty(list)){
-            return Result.error(CodeMsg.COLL_EMPTY);
-        }
-        return Result.success(list);
+    public Result<List<SysUser>> getSysUser() {
+        List<SysUser> sysUserList = sysUserService.getSysUserList();
+        return Result.success(sysUserList);
     }
-
     @ResponseBody
     @RequestMapping(value = "/redis/set")
     public  Result<Object> redisSet(){
-        List<SysUser> sysUserList = sysUserService.getSysUserList();
+        List<CaPerson> list = caPersonService.getAllCaPerson();
         Result<Object> result = new Result<Object>();
         try{
-            if (ValidateUtil.isNotEmpty(sysUserList)) {
-                redisService.set(SysUserKey.getListPrefix, "", sysUserList);
+            if (ValidateUtil.isNotEmpty(list)) {
+                redisService.set(CaPersonKey.getListPrefix, "", list);
             }
             result = Result.success(true);
         }catch (Exception e){
@@ -77,5 +83,11 @@ public class IndexController {
         return Result.success(listString);
     }
 
+    @ResponseBody
+    @RequestMapping("/db/getCaperson")
+    public Result<Object> dbGetCaPerson() {
+        List<CaPerson> list = caPersonService.getAllCaPerson();
+        return Result.success(list);
+    }
 
 }

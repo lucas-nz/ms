@@ -8,6 +8,8 @@ public class SysUser implements ISysUser{
 
     private String empName;
 
+    private String pwd;
+
     public String getOperId() {
         return operId;
     }
@@ -30,5 +32,13 @@ public class SysUser implements ISysUser{
 
     public void setEmpName(String empName) {
         this.empName = empName;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 }

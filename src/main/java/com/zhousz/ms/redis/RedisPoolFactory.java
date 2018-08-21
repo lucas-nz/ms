@@ -16,9 +16,9 @@ public class RedisPoolFactory {
     @Bean(name = "JedisPool")
     public JedisPool jedisPoolFactory() {
         GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
-//        genericObjectPoolConfig.setMaxIdle(100);
-//        genericObjectPoolConfig.setMaxTotal(500);
-//        genericObjectPoolConfig.setMinIdle(10);
+//        genericObjectPoolConfig.setMaxIdle(SysConfig.MAXIDLE);
+//        genericObjectPoolConfig.setMaxTotal(SysConfig.MAXTOTAL);
+//        genericObjectPoolConfig.setMinIdle(SysConfig.MINIDLE);
         JedisPool jp = new JedisPool(genericObjectPoolConfig, redisConfig.getHost(), redisConfig.getPort(), redisConfig.getTimeOut(), redisConfig.getPassword());
         return jp;
     }
