@@ -16,7 +16,14 @@ function doLogin() {
            mobile: $('#mobile').val(),
            password: password
        },
-       success: function () {
+       success: function (result) {
+           if(result.code == 0) {
+               window.location.href = "/login/to_login";
+           }else {
+               layer.closeAll();
+               layer.msg(result.msg);
+           }
+
        },
        error: function () {
 

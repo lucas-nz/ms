@@ -8,10 +8,13 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(
-        validatedBy = {}
+        validatedBy = {IsMobileValidator.class}
 )
 public @interface IsMobile {
-    String message() default "{javax.validation.constraints.NotNull.message}";
+
+    boolean required() default true;
+
+    String message() default "手机号码格式错误";
 
     Class<?>[] groups() default {};
 

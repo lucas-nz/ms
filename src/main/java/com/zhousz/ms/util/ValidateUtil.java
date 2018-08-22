@@ -56,6 +56,12 @@ public class ValidateUtil {
     private static Pattern phoneNumberPattern = Pattern
             .compile("^(\\d{3,4}-)?\\d{7,8}$");
 
+
+    /**
+     *  手机号码字符串匹配
+     */
+    private static Pattern mobileNumberPattern = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
+
     // ---end:正在表达式---
 
     /**
@@ -516,6 +522,22 @@ public class ValidateUtil {
         Matcher m = phoneNumberPattern.matcher(phoneNumber);
         return m.matches();
     }
+
+    /**
+     * 验证字符串是否为手机号
+     * @param mobile
+     * @return true: 是, false: 不是
+     */
+    public static boolean isMobile(String mobile) {
+        if (isEmpty(mobile)) {
+            return false;
+        }
+        Matcher m = mobileNumberPattern.matcher(mobile);
+        return m.matches();
+    }
+
+
+
 
     /**
      * 验证字符串是否为纯中文构成

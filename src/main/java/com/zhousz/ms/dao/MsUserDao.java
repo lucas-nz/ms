@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 @Mapper
 public interface MsUserDao {
 
-    @Select("select * from ms.ms_user mu where mu.id = {#id}")
+    @Select("select * from ms_user where id = #{id}")
     MsUser getMsUserById(@Param("id")Long id);
 }
