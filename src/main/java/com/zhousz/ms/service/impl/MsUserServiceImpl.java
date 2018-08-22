@@ -1,6 +1,6 @@
 package com.zhousz.ms.service.impl;
 
-import com.zhousz.ms.dao.MsUserDao;
+import com.zhousz.ms.dao.MsUserMapper;
 import com.zhousz.ms.domain.MsUser;
 import com.zhousz.ms.exception.GlobalException;
 import com.zhousz.ms.service.MsUserService;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 public class MsUserServiceImpl implements MsUserService {
 
     @Autowired
-    private MsUserDao msUserDao;
+    private MsUserMapper msUserMapper;
 
     @Override
     public MsUser getMsUserById(Long id) {
-        return msUserDao.getMsUserById(id);
+        return msUserMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class MsUserServiceImpl implements MsUserService {
         String mobile = loginVo.getMobile();
         String password = loginVo.getPassword();
         // 判断手机号码是否存在
-        MsUser user = msUserDao.getMsUserById(Long.parseLong(mobile));
+        MsUser user = msUserMapper.selectByPrimaryKey(Long.parseLong(mobile));
         if (null == user) {
             throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
         }
