@@ -3,8 +3,6 @@ package com.zhousz.ms.vo;
 import com.zhousz.ms.validator.IsMobile;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class LoginVo {
